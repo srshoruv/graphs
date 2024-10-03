@@ -52,8 +52,23 @@ public:
         }
 
         cout << endl;
+    }
 
+    void dfsHelper(int u, vector<bool> &vis) {
+        vis[u] = true;
+        cout << u  << " ";
 
+        list<int> neibours = l[u];
+        for (int v : neibours) {
+            if (!vis[v]) {
+                dfsHelper(v, vis);
+            }
+        }
+    }
+
+    void dfs() {
+        vector<bool> vis(5, false);
+        dfsHelper(0,vis);
     }
 };
 
@@ -66,5 +81,5 @@ int main() {
     graph.addEdge(2,3);
     graph.addEdge(2,4);
 
-    graph.bfs();
+    graph.dfs();
 }
