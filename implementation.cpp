@@ -31,11 +31,10 @@ public:
         }
     }
 
-    void bfs() {
+    void bfsHelper(int st, vector<bool> &vis) {
         queue <int> q;
-        vector<bool> vis(V, false);
-        q.push(0);
-        vis[0] = true;
+        q.push(st);
+        vis[st] = true;
 
         while (q.size() > 0) {
             int u = q.front();
@@ -54,6 +53,16 @@ public:
         cout << endl;
     }
 
+    void bfs(){
+        vector<bool> vis(V, false);
+        for (int i=0; i<V; i++) {
+            if (!vis[i]) {
+                bfsHelper(i,vis);
+                cout << endl;
+            }
+        }
+    }
+
     void dfsHelper(int u, vector<bool> &vis) {
         vis[u] = true;
         cout << u  << " ";
@@ -67,8 +76,13 @@ public:
     }
 
     void dfs() {
-        vector<bool> vis(5, false);
-        dfsHelper(0,vis);
+        vector<bool> vis(V, false);
+        for (int i=0; i<V; i++) {
+            if (!vis[i]) {
+            dfsHelper(i,vis);
+        } 
+        }
+         
     }
 
     bool hasPathHelper(int src, int des, vector<bool> &vis) {
