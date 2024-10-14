@@ -2,6 +2,7 @@
 #include <vector>
 #include <list>
 #include <stack>
+#include <queue>
 using namespace std;
 
 class Graph{
@@ -64,6 +65,45 @@ public:
     } 
     cout << endl;
     }
+
+    void calcInde(vector<int> &inDeg) {
+        for (int u=0; u<V; u++) {
+            list<int> neibours = l[u];
+            for (int v : neibours) {
+                inDeg[v]++;
+            }
+        }
+    }
+
+    void topoSort2(){
+        vector<int> inDeg(V,0);
+        calcInde(inDeg);
+        queue<int> q;
+
+        for (int i=0; i<V; i++) {
+            if (inDeg[i]==0) {
+                q.push(i);
+            }
+        }
+
+        while (q.size()>0){
+            int curr = q.front();
+            q.pop();
+            cout << curr << " ";
+
+            list<int> neibours = l[curr];
+            for (int v : neibours){
+                inDeg[v]--;
+
+                if (inDeg[v]==0) {
+                    q.push(v);
+                }
+            }
+        }
+
+        cout << endl;
+
+    }
     
 };
 
@@ -79,6 +119,6 @@ int main() {
     graph.addEdge(5,0);
     graph.addEdge(5,2);
 
+    graph.topoSort2();
 
-    graph.topoSort();
 }
